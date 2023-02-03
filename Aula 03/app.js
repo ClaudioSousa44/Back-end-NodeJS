@@ -1,3 +1,9 @@
+/* 
+* Objetivo:  cálculos matemáticos
+* Data: 30/02/2023
+* Autor: Claudio Sousa
+* Versão: 1.0
+*/
 var readline = require('readline');
 
 var entradaDeDados = readline.createInterface({
@@ -5,7 +11,8 @@ var entradaDeDados = readline.createInterface({
     output : process.stdout
 });
 
-console.log('1 - Somar'+ '\n' +
+console.log(
+'1 - Somar'+ '\n' +
 '2 - Subtrair' + '\n' +
 '3 - Multiplicar' + '\n' +
 '4 - Dividir');
