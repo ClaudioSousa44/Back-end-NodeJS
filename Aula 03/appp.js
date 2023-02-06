@@ -37,10 +37,16 @@ entradaDeDados.question('Valor 1: \n', function(numero1){
 
                 resultado = matematica.calculadora(valor1, valor2, operacao)
 
-                if(resultado != false)
+                if(resultado === false )
+                    entradaDeDados.close()
+                else{
                     console.log(resultado)
-                    else
-                    entradaDeDados.close
+                    
+
+                }
+                
+
+                    
                 
 
 
