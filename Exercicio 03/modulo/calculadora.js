@@ -34,7 +34,6 @@ const calcular = (menorNum, maiorNum, resUsu) => {
 
     } else {
 
-        
         let contador = minMult
 
         resPar =0
@@ -49,28 +48,18 @@ const calcular = (menorNum, maiorNum, resUsu) => {
 
                 if ((res % 2) === 0) {
 
-
-
-
                     console.log(res)
                     resPar += 1
-
 
                 }
 
                 minMult += 1
 
-
-
-
             }
 
             console.log('Quantidade de números pares: ' + resPar)
 
-
-
         } else if (respostaUsu == 2) {
-
 
             resImpar = 0
 
@@ -84,9 +73,6 @@ const calcular = (menorNum, maiorNum, resUsu) => {
 
                 if ((res % 2) !== 0) {
 
-
-
-
                     console.log(res)
                     resImpar += 1
 
@@ -94,13 +80,9 @@ const calcular = (menorNum, maiorNum, resUsu) => {
 
                 minMult += 1
 
-
-
-
             }
 
             console.log('Quantidade de números impares: ' + resImpar)
-
 
         }else{
 
@@ -117,19 +99,12 @@ const calcular = (menorNum, maiorNum, resUsu) => {
 
                 if ((res % 2) === 0) {
 
-
-
-
                     console.log(res)
                     resPar += 1
-
 
                 }
 
                 minMult += 1
-
-
-
 
             }
 
@@ -147,9 +122,6 @@ const calcular = (menorNum, maiorNum, resUsu) => {
 
                 if ((res % 2) !== 0) {
 
-
-
-
                     console.log(res)
                     resImpar += 1
 
@@ -157,30 +129,12 @@ const calcular = (menorNum, maiorNum, resUsu) => {
 
                 minMult += 1
 
-
-
-
             }
 
             console.log('Quantidade de números impares: ' +resImpar)
-
-
         }
-
-
-
-
-
-
-
     }
-
-
-
-
-
 }
-
 
 module.exports = {
     calcular

@@ -57,29 +57,14 @@ const tabuada = (multiplicandoUm, multiplicandoDois ,minMultiplicador, maxMultip
                 menorMultiplicador += 1
 
             }
-
-
-            
             multiplicando1 += 1
 
-           
-            
-            
-            
-
-          
         }
-
-        
-
 
     }
 
 
 }
-
-
-
 
 module.exports = {
     tabuada

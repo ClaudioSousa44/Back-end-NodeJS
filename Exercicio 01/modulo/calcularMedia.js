@@ -16,7 +16,6 @@ const calcMedia = (nota1, nota2, nota3, nota4) => {
 
     let media = (num1 + num2 + num3 + num4) / 4
 
-    
 
     return media
 
