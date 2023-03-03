@@ -231,82 +231,33 @@ let listProdutosJSON = {};
     // console.log('modelos: ' + listProdutosJSON.produtos[1].modelo[1])
 
    
-    let contIndexProduto = 0
-    let contLengthArray = listProdutosArray.length;
+   
+    listProdutosJSON.produtos.forEach((itemProduto) => {
+        console.log('Nome: ' + itemProduto.nome);
+        console.log('Marca: ' + itemProduto.marca);
+        console.log('Valor: R$' + itemProduto.valor);
+        console.log('Cores: ')
+
+        itemProduto.cores.forEach((itemCor) => {
+            console.log('***' + itemCor)
+        })
+        
+        console.log('Modelos:')
+
+        if(itemProduto.modelo != undefined){
+            itemProduto.modelo.forEach((itemModelo) => {
+                console.log(itemModelo)
+            })
+        }else{
+            console.log('Não possui modelos')
+        }
+
+        console.log('\n')
+
+        
+
     
-
-    let resNome;
-    let resMarca;
-    let resValor;
-    let contCor = 0;
-    let reset = contCor;
-    let contModelo = 0;
-
-
-    while ( contIndexProduto < contLengthArray){
-
-        contCor = reset;
-        contModelo = reset;
-
-        resNome =  listProdutosJSON.produtos[contIndexProduto].nome;
-        resMarca =  listProdutosJSON.produtos[contIndexProduto].marca;
-        resValor =  listProdutosJSON.produtos[contIndexProduto].valor;
-
-        let teste = listProdutosJSON.produtos[contIndexProduto].cores[contCor].length;
-        
-
-        if (listProdutosJSON.produtos[contIndexProduto].nome == "Mouse") {
-          console.log("não possui");
-        } else {
-            let teste2 =
-              listProdutosJSON.produtos[contIndexProduto].modelo[contModelo]
-                .length;
-          while (contModelo < teste2) {
-            let resModelo = [];
-            resModelo.push(
-              listProdutosJSON.produtos[contIndexProduto].modelo[contModelo]
-            );
-            contModelo += 1;
-            console.log(resModelo);
-          }
-        }
-
-
-        while( contCor < teste){
-
-            let resCor = [];            
-
-            // if(listProdutosJSON.produtos[contIndexProduto].cores[contCor] != undefined){
-            //     resCor.push(
-            //       listProdutosJSON.produtos[contIndexProduto].cores[contCor]
-            //     );
-              
-
-            // }else{
-            //      resCor.splice(undefined, 1)
-                
-
-            // }
-            
-            contCor += 1
-
-            console.log(resCor)
-        }
-
-        
-
-        
-
-        console.log(resNome, resMarca, resValor)
-
-        contIndexProduto += 1;
-
-        
-        
-    }
-    // console.log(listProdutosJSON.produtos[5].nome
-      
-    // );
+    });
   
 }
 
