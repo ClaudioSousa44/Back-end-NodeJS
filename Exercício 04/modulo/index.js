@@ -66,7 +66,98 @@ const getCapitalEstado = (siglaEstado, listaDeEstados) => {
 
 }
 
+const getEstadoRegiao = (regiao, listaDeEstados) => {
+    let listEstadoRegiao = {};
+    let arrayEstados = [];    
+    let status = false;
+
+    listaDeEstados.estados.forEach((estado) => {
+        if(estado.regiao == regiao){
+            let listUfNome = {};
+            
+            listUfNome.uf = estado.sigla;
+            listUfNome.descricao = estado.nome;
+            // listUfNome = {uf: estado.sigla, descricao: estado.nome}
+            arrayEstados.push(listUfNome);
+        
+            status = true;        
+        }
+    })
+
+    if(status){
+        listEstadoRegiao.regiao = regiao;
+        listEstadoRegiao.estados = arrayEstados;
+        return listEstadoRegiao;
+
+    }else{
+        return status;
+    }
+   
+}
+
+// console.log(getEstadoRegiao("Sudeste", estadosCidades.estadosCidades))
 
 
+const getCapitalPais = (listaDeEstados) => {
+    let listCapital = {};
+    let arrayCapital = [];
+    let status = false;
+    
 
+    listaDeEstados.estados.forEach((capital) => {
+        let listCheckCapital = {};
+        if(capital.capital_pais != undefined){
+            listCheckCapital.capital_atual = capital.capital_pais.capital;
+            listCheckCapital.uf = capital.sigla;
+            listCheckCapital.descricao = capital.nome;
+            listCheckCapital.capital = capital.capital;
+            listCheckCapital.regiao = capital.regiao;
+            listCheckCapital.capital_pais_ano_inicio = capital.capital_pais.ano_inicio;
+            listCheckCapital.capital_pais_ano_termino = capital.capital_pais.ano_termino;
+            arrayCapital.push(listCheckCapital);
+            status = true;
+
+        }
+        
+    })
+
+    if(status){
+        listCapital.capitais = arrayCapital;
+        return listCapital;
+    }else{
+        return status;
+    }
+   
+}
+
+// console.log(getCapitalPais(estadosCidades.estadosCidades));
+
+const getCidades = (sigla, listaDeEstados) => {
+    let listCidadesJson = {};
+    let arrayCidades = [];
+    let status = false;
+
+    listaDeEstados.estados.forEach((cidade) => {
+        if(cidade.sigla == sigla){
+            listCidadesJson.uf = cidade.sigla;
+            listCidadesJson.descricao = cidade.nome;
+            cidade.cidades.forEach((nomeCidade)=> {
+                arrayCidades.push(nomeCidade.nome);
+            })
+            
+            status = true;
+
+        }
+    })
+
+    if(status){
+        listCidadesJson.quantidade_cidades = arrayCidades.length;
+        listCidadesJson.cidades = arrayCidades
+        return listCidadesJson
+    }else{
+        return status;
+    }
+}
+
+// console.log(getCidades("AC", estadosCidades.estadosCidades));
 
