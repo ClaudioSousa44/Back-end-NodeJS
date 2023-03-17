@@ -27,7 +27,7 @@ const getDadosEstado = (siglaEstado, listaDeEstados) => {
     let status = false;
 
     listaDeEstados.estados.forEach((estado) => {
-        if(estado.sigla == siglaEstado.toUpperCase()){
+        if(estado.sigla.toUpperCase() == siglaEstado.toUpperCase()){
             listDadosEstado.uf = siglaEstado;
             listDadosEstado.descricao = estado.nome;
             listDadosEstado.capital = estado.capital;
@@ -50,7 +50,7 @@ const getCapitalEstado = (siglaEstado, listaDeEstados) => {
     let status = false;
 
     listaDeEstados.estados.forEach((estado) => {
-        if(estado.sigla == siglaEstado.toUpperCase()){
+        if(estado.sigla.toUpperCase() == siglaEstado.toUpperCase()){
             listDadosEstado.uf = siglaEstado;
             listDadosEstado.descricao = estado.nome;
             listDadosEstado.capital = estado.capital;
@@ -72,7 +72,7 @@ const getEstadoRegiao = (regiao, listaDeEstados) => {
     let status = false;
 
     listaDeEstados.estados.forEach((estado) => {
-        if(estado.regiao == regiao){
+        if(estado.regiao.toUpperCase() == regiao.toUpperCase()){
             let listUfNome = {};
             
             listUfNome.uf = estado.sigla;
@@ -138,7 +138,7 @@ const getCidades = (sigla, listaDeEstados) => {
     let status = false;
 
     listaDeEstados.estados.forEach((cidade) => {
-        if(cidade.sigla == sigla){
+        if(cidade.sigla.toUpperCase() == sigla.toUpperCase()){
             listCidadesJson.uf = cidade.sigla;
             listCidadesJson.descricao = cidade.nome;
             cidade.cidades.forEach((nomeCidade)=> {
