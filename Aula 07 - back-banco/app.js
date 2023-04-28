@@ -14,6 +14,9 @@ const { request, response } = require('express');
 //cria o objeto app
 const app = express();
 
+//Usando o bodyParse no padrão json
+const  bodyParseJSON = bodyParse.json();
+
 
 //definir as permissões do cors
 app.use((request, response, next) => {
@@ -37,7 +40,7 @@ app.use((request, response, next) => {
 - Autor: Claudio Sousa
 - Versão: 1.0 
 */
-let controllerAluno = require('./controller/controller_aluno.js');
+const controllerAluno = require('./controller/controller_aluno.js');
 
 //EndPoint: Retorna todos os dados de alunos
 app.get('/v1/lion-school/aluno', cors(), async (request,response) => {
@@ -107,8 +110,15 @@ app.get('/v1/lion-school/aluno/nome/:nome', cors(), async (request,response) => 
 });
 
 //EndPoint: Insere um dado novo
-app.post('/v1/lion-school/aluno', cors(), async (request,response) => {
+app.post('/v1/lion-school/aluno', cors(), bodyParseJSON, async (request,response) => {
 
+    //Recebe os dados encaminhados na requisição
+    let dadosBody = request.body;
+
+   let resultDadosAluno = await controllerAluno.inserirAluno(dadosBody);
+
+   response.status(resultDadosAluno.status);
+   response.json(resultDadosAluno) 
 
 });
 

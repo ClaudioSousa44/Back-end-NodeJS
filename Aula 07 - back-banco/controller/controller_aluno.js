@@ -6,12 +6,30 @@
 */
 
 //import do arquivo DAO para acessar dados do aluno no BD
-let alunosDAO = require('../model/DAO/alunoDAO.js');
+const alunosDAO = require('../model/DAO/alunoDAO.js');
 
+const config = require('./modulo/config.js')
 
 
 //inserer novo aluno
-const inserirAluno = (dadosAluno) => {
+const inserirAluno = async (dadosAluno) => {
+
+    if(
+        dadosAluno.nome == ''      || dadosAluno.nome == undefined       || dadosAluno.nome.length > 100     ||
+        dadosAluno.rg == ''        ||  dadosAluno.rg == undefined        || dadosAluno.rg.length > 15        ||
+        dadosAluno.cpf == ''       ||  dadosAluno.cpf == undefined       || dadosAluno.cpf.length > 18       || 
+        dadosAluno.data_nasc == '' ||  dadosAluno.data_nasc == undefined || dadosAluno.data_nasc.length > 10 ||
+        dadosAluno.email == ''     ||  dadosAluno.email == undefined     || dadosAluno.email.length > 255       
+    ){
+        return config.ERROR_REQUIRED_FIELDS
+    }else{
+        let resultDadosAlunos = await alunosDAO.insertAlunos(dadosAluno);
+        if(resultDadosAlunos){
+            return config.SUCCESS_CREATED_ITEM
+        }else{
+            return config.ERROR_INTERNAL_SERVER
+        }
+    }
 
 }
 
@@ -75,5 +93,6 @@ const getBuscarAlunoNome = async (nome) => {
 module.exports = {
     getAlunos,
     getBuscarAlunoID,
-    getBuscarAlunoNome
+    getBuscarAlunoNome,
+    inserirAluno
 }
