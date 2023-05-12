@@ -11,6 +11,8 @@ const cors = require('cors');
 const bodyParse = require('body-parser');
 const { request, response } = require('express');
 
+const config = require('../Aula 07 - back-banco/controller/modulo/config.js')
+
 //cria o objeto app
 const app = express();
 
@@ -42,76 +44,51 @@ app.use((request, response, next) => {
 */
 const controllerAluno = require('./controller/controller_aluno.js');
 
+// ENDPOINT - ALUNOS
+
 //EndPoint: Retorna todos os dados de alunos
-app.get('/v1/lion-school/aluno', cors(), async (request,response) => {
+    app.get('/v1/lion-school/aluno', cors(), async (request,response) => {
     
 
     let dadosAluno = await controllerAluno.getAlunos();
+    response.status(dadosAluno.status);
+    response.json(dadosAluno)
 
-    if(dadosAluno){
-        response.json(dadosAluno);
-        response.status(200);
-    }else {
-        response.json();
-        response.status(404)
-    }
 
-});
+    });
 
 //EndPoint: Retorna o aluno filtrando por ID
-app.get('/v1/lion-school/aluno/:id', cors(), async (request,response) => {
+    app.get('/v1/lion-school/aluno/:id', cors(), async (request,response) => {
     let id = request.params.id
-    let statusCode;
-    let dadosAluno = {};
-
-    if(id == '' || id == undefined || isNaN(id)){
-        statusCode = 400
-        dadosAluno.message = 'Preencha o id com números'
-    } else {
-        let aluno = await controllerAluno.getBuscarAlunoID(id);
-
-        if(aluno){
-            statusCode = 200;
-            dadosAluno = aluno
-        }else{
-            statusCode = 404
-        }
-    }
-
-    response.status(statusCode);
-    response.json(dadosAluno);
     
+    let aluno = await controllerAluno.getBuscarAlunoID(id);
+    console.log(aluno)
 
-});
+    response.status(aluno.status);
+    response.json(aluno);
+    
+    });
 
-app.get('/v1/lion-school/aluno/nome/:nome', cors(), async (request,response) => {
+    app.get('/v1/lion-school/aluno/nome/:nome', cors(), async (request,response) => {
     let nome = request.params.nome
-    let statusCode;
-    let dadosAluno = {};
-
-    if(nome == '' || nome == undefined || !isNaN(nome)){
-        statusCode = 400
-        dadosAluno.message = 'Preencha o nome com letras'
-    } else {
+   
+    // if(nome == '' || nome == undefined || !isNaN(nome)){
+    //     statusCode = 400
+    //     dadosAluno.message = 'Preencha o nome com letras'
+   
         let aluno = await controllerAluno.getBuscarAlunoNome(nome);
-
-        if(aluno){
-            statusCode = 200;
-            dadosAluno = aluno
-        }else{
-            statusCode = 404
-        }
-    }
-
-    response.status(statusCode);
-    response.json(dadosAluno);
+    response.status(aluno.status);
+    response.json(aluno);
     
 
-});
+    });
 
 //EndPoint: Insere um dado novo
-app.post('/v1/lion-school/aluno', cors(), bodyParseJSON, async (request,response) => {
+    app.post('/v1/lion-school/aluno', cors(), bodyParseJSON, async (request,response) => {
 
+    let contentType = request.headers['content-type']
+
+    if(String(contentType).toLocaleLowerCase() == 'application/json'){
     //Recebe os dados encaminhados na requisição
     let dadosBody = request.body;
 
@@ -119,20 +96,48 @@ app.post('/v1/lion-school/aluno', cors(), bodyParseJSON, async (request,response
 
    response.status(resultDadosAluno.status);
    response.json(resultDadosAluno) 
+}else {
+    response.status(config.ERROR_INVALID_CONTENT_TYPE.status)
+    response.json(config.ERROR_INVALID_CONTENT_TYPE)
+}
 
-});
+
+    });
 
 //EndPoint: Atualiza um aluno existente, filtrando pelo ID
-app.put('/v1/lion-school/aluno/:id', cors(), async (request,response) => {
+    app.put('/v1/lion-school/aluno/:id', cors(), bodyParseJSON, async (request,response) => {
 
+    let contentType = request.headers['content-type']
 
-});
+    if(String(contentType).toLocaleLowerCase() == 'application/json'){
+    //Recebe o id do aluno
+    let alunoId = request.params.id;
+    //Recebe os dados do aluno que são encaminhados pelo corpo da requisição
+    let dadosBody = request.body
+
+    let resultDadosAluno = await controllerAluno.atualizarAluno(dadosBody, alunoId)
+
+    response.status(resultDadosAluno.status)
+    response.json(resultDadosAluno)
+    
+    } else {
+        response.status(config.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(config.ERROR_INVALID_CONTENT_TYPE)
+    }
+
+    });
 
 //EndPoint: Exclui um aluno, filtrando pelo ID
-app.delete('/v1/lion-school/aluno/:id', cors(), async (request,response) => {
+    app.delete('/v1/lion-school/aluno/:id', cors(), async (request,response) => {
 
+    let id = request.params.id
 
-});
+    let resultDadosAluno = await controllerAluno.deletarAluno(id)
+
+    response.status(resultDadosAluno.status)
+    response.json(resultDadosAluno)
+
+    });
 
 app.listen(8080, () => {
     console.log('rodo');

@@ -7,6 +7,7 @@
 
 //import da biblioteca do prisma client
 const { PrismaClient } = require('@prisma/client');
+const { PrismaClientRustPanicError } = require('@prisma/client/runtime');
 
 //Instância da classe prisma client
 const prisma = new PrismaClient();
@@ -42,13 +43,40 @@ const insertAlunos = async (dadosAluno) => {
 }
 
 //Atualizar dados do aluno banco de dados
-const updateAlunos = (dadosAluno) => {
+const updateAlunos = async (dadosAluno) => {
+    
+    //Script para atualizar os dados do DB
+    let sql = `
+        update tbl_aluno set   
+                nome = '${dadosAluno.nome}',
+                rg = '${dadosAluno.rg}',
+                cpf = '${dadosAluno.cpf}',
+                data_nasc = '${dadosAluno.data_nasc}',
+                email = '${dadosAluno.email}'
+        where id = '${dadosAluno.id}'`
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if(resultStatus){
+        return true
+    }else{
+        return false
+    }
 
 }
 
 //Deletar dados do aluno banco de dados
-const deleteAlunos = (id) => {
+const deleteAlunos = async (id) => {
 
+    let sql = `delete from tbl_aluno where id = ${id}`
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if(resultStatus){
+        return true
+    }else{
+        return false
+    }
 }
 
 //Retorna dados de todos aluno banco de dados
@@ -96,12 +124,27 @@ const selectByNameAlunos = async (nome) => {
     }else{
         return false;
     }
-
 }
+
+const selectLastID = async () => {
+    let sql = `select * from tbl_aluno order by id desc limit 1;`
+    let rsAluno = await prisma.$queryRawUnsafe(sql);
+    if(rsAluno.length > 0){
+        return rsAluno;
+    }else{
+        return false;
+    }
+}
+
+
 
 module.exports = {
     selectAllAlunos,
     selectByIdAlunos,
     selectByNameAlunos,
-    insertAlunos
+    insertAlunos,
+    updateAlunos,
+    deleteAlunos,
+    selectLastID
+
 }
